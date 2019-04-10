@@ -10,6 +10,28 @@ export function login(username, password) {
     }
   })
 }
+export function getVjudgeInfo(username, name) {
+  return request({
+    url: 'api/spider/vjudge',
+    method: 'post',
+    data: {
+      username,
+      name
+    }
+  })
+}
+
+export function saveUserInfo(username, password, email) {
+  return request({
+    url: 'api/user/saveUserInfo',
+    method: 'post',
+    data: {
+      username,
+      password,
+      email
+    }
+  })
+}
 
 export function register(username, password, email) {
   return request({
@@ -20,6 +42,22 @@ export function register(username, password, email) {
       password,
       email
     }
+  })
+}
+
+export function vjudgeBind(vjudge, username) {
+  return request({
+    url: 'api/spider/vjudgebind',
+    method: 'get',
+    params: { vjudge, username }
+  })
+}
+
+export function testVjudge(vjudge) {
+  return request({
+    url: 'api/spider/testvjudge',
+    method: 'get',
+    params: { vjudge }
   })
 }
 

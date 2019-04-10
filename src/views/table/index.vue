@@ -7,35 +7,34 @@
       border
       fit
       highlight-current-row>
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column align="center" label="ID" width="150">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="OJ" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.OJ }}
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="Prob" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
+          <span>{{ scope.row.Prob }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="user" width="110" align="center">
         <template slot-scope="scope">
-          {{ scope.row.pageviews }}
+          {{ scope.row.username }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
+      <el-table-column class-name="status-col" label="Accept" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
+          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.Accept }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
+      <el-table-column align="center" prop="created_at" label="Link" width="200">
         <template slot-scope="scope">
-          <i class="el-icon-time"/>
-          <span>{{ scope.row.display_time }}</span>
+          <a :href="'https://vjudge.net/problem/' + scope.row.OJ + '-' + scope.row.Prob" target="_blank"><svg-icon icon-class="link" /></a>
         </template>
       </el-table-column>
     </el-table>
@@ -43,7 +42,8 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+import { getList } from '@/api/list'
+import store from '@/store'
 
 export default {
   filters: {
@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      username: store.getters.vjudge,
       list: null,
       listLoading: true
     }
@@ -68,8 +69,8 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
-        this.list = response.data.items
+      getList(this.username).then(response => {
+        this.list = response.data
         this.listLoading = false
       })
     }

@@ -6,6 +6,8 @@ const user = {
     token: getToken(),
     name: '',
     avatar: '',
+    vjudeg: '',
+    email: '',
     roles: []
   },
 
@@ -21,6 +23,12 @@ const user = {
     },
     SET_ROLES: (state, roles) => {
       state.roles = roles
+    },
+    SET_VJUDGE: (state, vjudge) => {
+      state.vjudeg = vjudge
+    },
+    SET_EMAIL: (state, email) => {
+      state.email = email
     }
   },
 
@@ -51,6 +59,8 @@ const user = {
             reject('getInfo: roles must be a non-null array !')
           }
           commit('SET_NAME', data.username)
+          commit('SET_EMAIL', data.email)
+          commit('SET_VJUDGE', data.vjudge)
           commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
           resolve(response)
         }).catch(error => {
